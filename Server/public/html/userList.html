@@ -1,0 +1,43 @@
+<div class="second-nav">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button class="btn btn-default button" ui-sref="home"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Back to topics</button>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="forum-search">
+                        <input type="text" ng-model="userSearch.username" placeholder="Enter username">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line">
+
+<div class="content-wrapper">
+    <table class="table table-hover">
+        <tr  ng-repeat="user in users | orderBy: '-isBanned'| filter: userSearch">
+
+            <td class="first-row">
+                <h3>{{user.username}}</h3>
+            </td>
+            <td class="second-row">
+                <p ng-if="user.isBanned">Status: Banned</p>
+                <p ng-if="!user.isBanned">Status: Not Banned</p>
+            </td>
+            <td class="third-row">
+                <button ng-disabled="!user.isBanned" ng-click="banUser(user._id, false)" class="btn btn-primary ">Unban User</button>
+                <button ng-disabled="user.isBanned" ng-click="banUser(user._id, true)" class="btn btn-danger">Ban User</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<hr class="line">
+

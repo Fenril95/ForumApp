@@ -1,0 +1,127 @@
+<div class="second-nav">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button class="btn btn-default button" ui-sref="home"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Back to topics</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line-small">
+
+<div class="content-wrapper">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Topics find: <span>{{topics.length}}</span>
+                    </a>
+                </h4>
+            </div>
+
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span ng-show="topics.length === 0">Sorry, nothing can be found</span>
+                                <!--Rendering topics-->
+                                <div ng-repeat="topic in topics | orderBy: created_at: true" class="topic">
+
+                                    <div class="left-section">
+                                        <h3 ui-sref="topic({topic_id: topic._id})"><a>{{topic.header}}</a></h3>
+                                        <p>{{topic.description}}</p>
+                                    </div>
+                                    <div class="right-section">
+                                        <span>Created {{topic.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                                        <span>Last modified at {{topic.modified_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                                        <span>Posted by {{topic.created_by}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Questions find: <span>{{questions.length}}</span>
+                    </a>
+                </h4>
+            </div>
+
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span ng-show="questions.length === 0">Sorry, nothing can be found</span>
+                                <!--Rendering questions inside topic-->
+                                <div ng-click="takeQuestion(question)" ng-repeat="question in questions | orderBy: created_at: true" class="question">
+
+                                    <div class="left-section">
+                                        <h3 ui-sref="question({topic_id: question.topic_id, question_id: question._id})"><a>{{question.title}}</a></h3>
+                                        <span>Posted by {{question.created_by}}</span>
+                                    </div>
+                                    <div class="right-section">
+                                        <span>Created {{question.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                                        <span>Last modified at {{question.modified_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Comments find: <span>{{comments.length}}</span>
+                    </a>
+                </h4>
+            </div>
+
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span ng-show="comments.length === 0">Sorry, nothing can be found</span>
+
+                                <!--Comment section-->
+                                <div ng-click="redirectToQuestion(comment.question_id)" ng-repeat="comment in comments | orderBy: 'isImportant' : true"  class="topic" >
+                                    <a ui-sref="question({topic_id: comment.topic_id, question_id: comment.question_id})"> Go there</a>
+                                    <p>{{comment.content}}</p>
+                                    <span>Created {{comment.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                                    <span>Created by {{comment.created_by}}</span>
+                                    <span>Last modified at {{comment.modified_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line-small">

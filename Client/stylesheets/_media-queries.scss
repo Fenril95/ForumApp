@@ -1,0 +1,90 @@
+@media screen and (max-width: 849px) {
+  .collapse.navbar-collapse {
+    .nav.navbar-nav.info-nav {
+      li {
+        a {
+          font-size: 1.0em;
+        }
+      }
+    }
+    .nav.navbar-nav.navbar-right.auth-nav {
+      li {
+        font-size: 1.1em;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-toggle {
+    margin-top: 18px;
+    .icon-bar {
+      border: 1px solid $main-text-color;
+    }
+  }
+
+  .topic {
+    .admin-buttons {
+      button.btn {
+        width: 33%;
+      }
+    }
+  }
+
+  footer.footer {
+    height: 103px;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  .content-wrapper {
+    .outer-part {
+      .inner-part {
+        flex-direction: column;
+
+        .user-info,
+        .question-inner {
+          width: 100%;
+        }
+
+        .user-info {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 444px) {
+  .second-nav {
+    .col-xs-6 {
+      .forum-search {
+        input {
+          width: 130px;
+        }
+      }
+    }
+  }
+
+  .topic {
+    .topic-inner {
+      display: flex;
+      flex-direction: column;
+
+      .left-section,
+      .right-section {
+        width: 100%;
+      }
+    }
+  }
+
+
+
+  footer.footer {
+    height: 124px;
+  }
+}

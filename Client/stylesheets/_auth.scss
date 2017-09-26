@@ -1,0 +1,40 @@
+input[type='file'] {
+  color: transparent;
+  margin-top: 10px;
+}
+
+.auth {
+  width: 100%;
+  h3 {
+    @extend .title;
+  }
+
+  .user,
+  .password,
+  .email {
+    margin-top: 10px;
+    outline: none;
+    &:focus {
+      border: 1px solid $main-nav-color;
+    }
+  }
+
+  .file-loader {
+    margin-top: 10px;
+  }
+
+  .submit-btn {
+    margin: 20px 0;
+    background-color: $main-text-color;
+    color: $general-text-color;
+    border: 2px solid $dark-text-color;
+    width: 100%;
+    border-radius: 0;
+    font-size: 18px;
+    &:hover {
+      background-color: $general-text-color;
+      color: $main-text-color;
+      border: 2px solid $main-text-color;
+    }
+  }
+}

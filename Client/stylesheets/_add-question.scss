@@ -1,0 +1,45 @@
+.add-question {
+  @extend .add-topic;
+
+  h3 {
+    @extend .title;
+  }
+
+  input {
+    margin-top: 20px;
+  }
+
+  textarea {
+    margin-top: 30px;
+    resize: none;
+    height: 116px;
+  }
+
+  input,
+  textarea {
+    outline: none;
+    &:hover {
+      border-radius: 0;
+      border: 1px solid $general-text-color;
+    }
+  }
+
+  .help-block {
+    margin: 0;
+  }
+
+  .submit-btn {
+    margin: 20px 0;
+    background-color: $main-text-color;
+    color: $general-text-color;
+    border: 2px solid $dark-text-color;
+    width: 100%;
+    border-radius: 0;
+    font-size: 18px;
+    &:hover {
+      background-color: $general-text-color;
+      color: $main-text-color;
+      border: 2px solid $main-text-color;
+    }
+  }
+}

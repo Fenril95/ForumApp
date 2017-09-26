@@ -1,0 +1,146 @@
+<div class="second-nav">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button class="btn btn-default button" ui-sref="home"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Back to topics</button>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="ask-question">
+                        <button ng-if="userStatus.authenticated && !userStatus.isBanned"  ng-click="askQuestion()" class="btn btn-default button">Ask a Question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line">
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 page-control">
+            <dir-pagination-controls></dir-pagination-controls>
+        </div>
+
+        <div class="col-sm-6 count-select" >
+            <select ng-hide="!arrLength" ng-model="topicPerPage">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="{{arrLength}}" selected>all</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <!--Rendering questions inside topic-->
+            <h3 class="title">List of questions</h3>
+            <div ng-click="takeQuestion(question)" dir-paginate="question in questions | orderBy: created_at: true | itemsPerPage: topicPerPage" class="question" ng-class-even="'even-question'">
+                <div class="question-inner">
+                    <div class="left-section">
+                        <h3 ui-sref="question({topic_id: question.topic_id, question_id: question._id})"><a>{{question.title}}</a></h3>
+                        <span>Posted by {{question.created_by}}</span>
+                    </div>
+                    <div class="right-section">
+                        <span>Created {{question.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                        <span>Last modified at {{question.modified_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                    </div>
+                </div>
+
+                <div ng-if="userStatus.role === 'Admin'" class="admin-buttons">
+                    <!--Take id for further work with editing and open modal window-->
+                    <button ng-click="grabData(question._id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">Edit Question</button>
+                    <!--Delete question-->
+                    <button ng-click="deleteQuestion(question._id)" class="btn btn-default">Delete Question</button>
+                   <!--Take id for in case, of moving question and open another modal-->
+                    <button ng-click="takeData(question._id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">Move Question</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 page-control">
+            <dir-pagination-controls></dir-pagination-controls>
+        </div>
+
+        <div class="col-sm-6 count-select" >
+            <select ng-hide="!arrLength" ng-model="topicPerPage">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="{{arrLength}}" selected>all</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<hr class="line">
+
+<div class="modal fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group input-group-md edit">
+
+                        <form name="editQuestionForm">
+                            <h3>Edit Question</h3>
+                            <input ng-model="editedQuestion.title" name="title" type="text" class="form-control edit-input" placeholder="Title" ng-minlength="3" ng-maxlength="180" required>
+                            <p ng-show="editQuestionForm.title.$error.maxlength" class="help-block">Too long title.</p>
+                            <p ng-show="editQuestionForm.title.$error.minlength" class="help-block">Too short title.</p>
+                            <p ng-show="editQuestionForm.title.$pristine">Fill your title</p>
+
+                            <textarea ng-model="editedQuestion.description" name="description" class="form-control edit-textarea" placeholder="Write description" required></textarea>
+                            <p ng-show="editQuestionForm.description.$pristine">Fill your description</p>
+
+                            <!--Submiting question for edit-->
+                            <button ng-disabled="editQuestionForm.$invalid" ng-if="!error" ng-click="editQuestion()" class="btn btn-default submit-btn">Save Changes</button>
+                        </form>
+                        <span ng-if="error">{{error}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="move">
+                        <h3>Choose topic, in which you want to move your question</h3>
+                        <!--Render topic list-->
+                        <div ng-repeat="topic in topics" class="move-to-topic">
+                            <div class="topic-header">
+                                <span>{{topic.header}}</span>
+                            </div>
+                                <!--Move question to that topic-->
+                            <div>
+                                <button class="btn btn-danger" ng-click="moveQuestion(topic._id)">Move here</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

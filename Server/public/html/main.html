@@ -1,0 +1,80 @@
+<div class="second-nav">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="topic-filter">
+                        <input type="text" ng-model="topicSearch.header" placeholder="Enter topic name">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="forum-search">
+                        <input type="text" placeholder="search..." ng-model="search.search">
+                        <i class="fa fa-search" aria-hidden="true" ng-show="search.search" ng-click="submitSearch()"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="topic-title">Forum Topics</h3>
+            <!--Rendering topics-->
+            <div ng-repeat="topic in topics | orderBy: created_at: true | filter: topicSearch" class="topic">
+                <div class="topic-inner">
+                    <div class="left-section">
+                        <h3 ui-sref="topic({topic_id: topic._id})"><a>{{topic.header}}</a></h3>
+                        <p>{{topic.description}}</p>
+                    </div>
+                    <div class="right-section">
+                        <span>Created {{topic.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                        <span>Last modified at {{topic.modified_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                        <span>Posted by {{topic.created_by}}</span>
+                    </div>
+                 </div>
+                <div ng-if="userStatus.role === 'Admin'" class="admin-buttons">
+                    <!--Take topic id for further using in controller-->
+                    <button ng-click="grabData(topic._id)" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Edit Topic</button>
+                    <!--Delete particular topic-->
+                    <button ng-click="deleteTopic(topic._id)" class="btn btn-default">Delete Topic</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line">
+
+<!--Modal Window for editing topic-->
+<div class="modal fade bs-example-modal-lg edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group input-group-md edit">
+
+                        <form name="editTopicForm">
+                            <h3>Edit Topic</h3>
+
+                            <input ng-model="editedTopic.header" name="header" type="text" class="form-control edit-input" placeholder="Title" ng-minlength="3" ng-maxlength="180" required>
+                            <p ng-show="editTopicForm.header.$error.maxlength" class="help-block">Too long title.</p>
+                            <p ng-show="editTopicForm.header.$error.minlength" class="help-block">Too short title.</p>
+
+                            <textarea ng-model="editedTopic.description" name="title" class="form-control edit-textarea" placeholder="Write description"></textarea>
+                            <!--Button, that submits editing topic-->
+                            <button ng-disabled="editTopicForm.$invalid" ng-if="!error" ng-click="editTopic()" class="btn btn-default submit-btn">Save Changes</button>
+
+                        </form>
+                        <span ng-if="error">{{error}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

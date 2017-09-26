@@ -1,0 +1,17 @@
+.panel.panel-default {
+  .panel-heading {
+    background-color: $second-nav-color;
+  }
+  #headingOne,
+  #headingTwo,
+  #headingThree {
+    background-color: $second-nav-color;
+    color: $main-text-color;
+  }
+
+  .topic {
+    .right-section {
+      padding-left: 10px;
+    }
+  }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/libs/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/libs/jQuery/jquery.min.js"></script>
+    <script src="/libs/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/807830a658.js"></script>
+    <script src="/libs/Angular/angular.min.js"></script>
+    <script src="/libs/Angular/angular-ui-router.min.js"></script>
+    <script src="/libs/Angular/angular-base64-upload.min.js"></script>
+    <script src="/libs/Angular/dir-pagination.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <base href="/" />
+<body ng-app="app" ng-controller="indexController">
+    <div class="wrapper">
+        
+        <header class="header">
+            <!--fixed top menu-->
+            <nav class="navbar navbar-fixed-top main-nav">
+                <div class="content-wrapper">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand logo" ui-sref="home">FORUM APP</a>
+                            <!--<span class="loading-state" data-loading ><i class="fa fa-spinner fa-3x" aria-hidden="true"></i></span>-->
+                            <img src="/img/89.gif" class="loading-state" alt="here is loading" data-loading>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav info-nav">
+                                <li ng-if="!userStatus.authenticated"><a>You are not signed in</a></li>
+                                <li ng-if="userStatus.authenticated"><a>Welcome {{userStatus.currentUser}}....</a></li>
+                                <li ng-if="userStatus.authenticated && userStatus.isBanned">You are banned....</li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right auth-nav">
+                                <li><a ui-sref="home">Home</a></li>
+                                <li><a ng-if="userStatus.role === 'Admin'" ui-sref="addTopic">Add Topic</a></li>
+                                <li ng-if="userStatus.role === 'Admin'"><a ui-sref="users">User List</a></li>
+                                <li ng-if="!userStatus.authenticated"><a  ui-sref="login">Login</a></li>
+                                <li ng-if="!userStatus.authenticated"><a ui-sref="register">Register</a></li>
+                                <li ng-if="userStatus.authenticated"><a ui-sref="home" ng-click="signout()">Signout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!--Page main section-->
+        <main ng-if="!error" class="main" ui-view></main>
+        <h1 ng-if="error" class="error-message">{{error}}</h1>
+
+        <footer class="footer">
+           <div class="content-wrapper">
+               <div class="container-fluid">
+                   <div class="row">
+                       <div class="col-sm-6">
+                           <div class="copyright">
+                               Project was made by Petro Kryvolap. All rights reserved.
+                           </div>
+
+                       </div>
+
+                       <div class="col-sm-6">
+                           <div class="social-icons">
+                               <a href="https://www.facebook.com/profile.php?id=100003371018184" target="_blank"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                               <a href="https://www.linkedin.com/in/petro-kryvolap-937746133/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                               <a href="https://github.com/Fenril95" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+.quote-comment {
+  width: 70%;
+  background-color: rgba(126, 146, 82, 0.05);
+  border: 1px solid $general-text-color;
+  border-radius: 4px;
+  padding: 15px 35px 25px 20px;
+  text-align: left;
+  align-self: center;
+  height: auto;
+  margin-bottom: 15px;
+  span {
+    cursor: pointer;
+  }
+  h4 {
+    font-size: 1.2em;
+    span {
+      font-weight: bold;
+    }
+  }
+  div {
+    font-size: 1.0em;
+    line-height: 18px;
+  }
+}
+
+.content-wrapper {
+  h3 {
+    @extend .title;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .outer-part {
+    border: 1px solid $general-text-color;
+    margin-bottom: 50px;
+    margin-left: 20px ;
+    margin-right: 20px;
+
+    .data-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      border: 1px solid $general-text-color;
+      background-color: $main-nav-color;
+      span {
+        color: $main-text-color;
+        font-size: 1.2em;
+        padding: 6px 20px;
+      }
+    }
+
+    .inner-part {
+      display: flex;
+      flex-direction: row;
+
+
+      .user-info {
+        position: relative;
+        border: 1px solid $second-nav-color;
+        width: 25%;
+        background-color: rgba(126, 146, 82, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &:after {
+          content: '';
+          position: absolute;
+          right: -22px;
+          top: 40px;
+          width: 0;
+          height: 0;
+          border-top: 10px solid transparent;
+          border-left: 20px solid $second-nav-color;
+          border-bottom: 10px solid transparent;
+
+        }
+
+        img {
+          margin-top: 20px;
+          width: 120px;
+          height: auto;
+        }
+
+        p {
+          margin-top: 15px;
+          font-size: 1.4em;
+          font-weight: bold;
+        }
+
+
+        .rating {
+          margin: 15px 0;
+          .vote-btn {
+            padding: 6px 10px;
+            background-color: $general-text-color;
+            color: $main-text-color;
+          }
+
+
+          div {
+            button {
+              @extend .vote-btn;
+            }
+          }
+        }
+      }
+
+      .question-inner {
+        border: 1px solid $second-nav-color;
+        width: 75%;
+        padding: 0 50px 0 35px;
+
+        h3 {
+          @extend .title;
+          text-align: left;
+          margin-top: 15px;
+        }
+        p {
+          word-wrap: break-word;
+          font-size: 1.3em;
+          line-height: 28px;
+          color: $general-text-color;
+          margin-bottom: 30px;
+        }
+      }
+    }
+
+    .actions {
+      border: 1px solid $general-text-color;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px;
+
+      .action-btn {
+        font-size: 1.1em;
+        padding: 8px 20px;
+        background-color: $second-nav-color;
+        color: $main-text-color;
+        &:hover {
+          background-color: $main-text-color;
+          color: $second-nav-color;
+        }
+      }
+    }
+  }
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    h3 {
+      text-align: center;
+    }
+    textarea {
+      align-self: center;
+      resize: none;
+      outline: none;
+      width: 60%;
+      border-radius: 0;
+      height: 200px;
+      &:focus {
+        border: 1px solid $second-nav-color;
+      }
+    }
+    button.submit-btn {
+      margin-top: 30px;
+      align-self: center;
+      width: 60%;
+      background-color: $main-text-color;
+      color: $general-text-color;
+      border: 2px solid $dark-text-color;
+      border-radius: 0;
+      font-size: 18px;
+      &:hover {
+        background-color: $general-text-color;
+        color: $main-text-color;
+        border: 2px solid $main-text-color;
+      }
+    }
+  }
+}

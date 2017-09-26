@@ -1,0 +1,181 @@
+<div class="second-nav">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button class="btn btn-default button" ng-click="goToTopics()"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Back to topics</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line-small">
+
+<div class="content-wrapper">
+    <h3>Question: {{question.title}}</h3>
+    <div class="outer-part">
+
+        <div class="data-info">
+            <span>Created {{question.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+            <span> Posted by: {{question.created_by}}</span>
+        </div>
+
+        <div class="inner-part">
+            <div class="user-info">
+                <img src="{{question.user_img}}" alt="">
+                <p>user: {{question.created_by}}</p>
+            </div>
+            <div class="question-inner">
+                <h3>{{question.title}}</h3>
+                <hr>
+                <p>{{question.description}}</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div ng-if="userStatus.authenticated && isAuthor">
+                <button ng-disabled="!canChange" type="button" class="btn btn-primary action-btn" data-toggle="modal" data-target=".bs-example-modal-lg">Edit</button>
+            </div>
+            <div class="quote">
+                <button class="action-btn" ng-click="quote(question)" ng-if="userStatus.authenticated && !userStatus.isBanned">Reply with quote</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<hr class="line-small"  />
+
+<h3 class="title" ng-if="!userStatus.authenticated"> To leave your comment, first you need to <a href="#" ui-sref="login">sign in</a>, or <a href="#">sign up</a></h3>
+<h3 class="title" ng-if="userStatus.isBanned">Sorry, you are banned, so do not allowed to leave your comments </h3>
+
+<!--Field for posting a comment-->
+<div ng-if="userStatus.authenticated && !userStatus.isBanned">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="comment-form">
+                    <div ng-if="quoteComment" class="quote-comment">
+                        <span ng-click="clearQuote()">X</span>
+                        <h4>Quoted from <span>{{quoteAuthor}}</span></h4>
+                        <div>{{quoteComment}}</div>
+                    </div>
+                    <form name="commentForm" ng-submit="addComment()">
+                        <h3>Add Comment</h3>
+                        <textarea ng-model="comment.content" name="content" class="form-control" placeholder="Comment" ng-minlength="5" required></textarea>
+                        <p ng-show="commentForm.content.$pristine">Fill in your comment</p>
+
+                        <button ng-disabled="commentForm.$invalid" type="submit" class="btn btn-default submit-btn">Submit Comment</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line-small" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 page-control">
+            <dir-pagination-controls></dir-pagination-controls>
+        </div>
+
+        <div class="col-sm-6 count-select" >
+            <select ng-hide="!arrLength" ng-model="commentPerPage">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="{{arrLength}}"selected>all</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+<div class="content-wrapper">
+    <!--Comment section-->
+    <div dir-paginate="comment in comments | orderBy: 'isImportant' : true | itemsPerPage: commentPerPage"  ng-class="comment.isImportant ? 'important-comment' : 'usual-comment'">
+        <div class="outer-part">
+
+            <div class="data-info">
+                <span>Created {{comment.created_at | date: "MM/dd/yyyy 'at' h:mma"}}</span>
+                <span>Created by {{comment.created_by}}</span>
+            </div>
+
+            <div class="inner-part">
+                <div class="user-info">
+                    <img src="{{comment.user_img}}" alt="">
+                    <p>user: {{comment.created_by}}</p>
+                    <div class="rating">
+                        <h4>Rating</h4>
+                        <button ng-if="userStatus.authenticated" ng-disabled="comment.userRatingAction !== 0"  ng-click="upvote(comment._id)" class="vote-btn" >+</button>
+                        <span>{{comment.rating}}</span>
+                        <button ng-if="userStatus.authenticated" ng-disabled="comment.userRatingAction !== 0" ng-click="downvote(comment._id)" class="vote-btn">-</button>
+                        <div ng-if="comment.userRatingAction !== 0"><button ng-click="eraseVote(comment)">Get vote back</button></div>
+                    </div>
+                </div>
+                <div class="question-inner">
+                    <div ng-if="comment.quote" class="quote-comment">
+                        <h4>Quoted from <span>{{comment.quoteAuthor}}</span></h4>
+                        <div>{{comment.quote}}</div>
+                    </div>
+                    <p>{{comment.content}}</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div>
+                    <span class="text-warning" ng-if="userStatus.role === 'Admin'" ng-click="deleteComment(comment._id)">To remove, click => X</span>
+                    <button ng-click="makeImportant(comment._id, true)" ng-if="isAuthor && !comment.isImportant && !hasImportant" class="btn-default action-btn">Mark as usefull</button>
+                    <button ng-click="makeImportant(comment._id, false)" ng-if="isAuthor && comment.isImportant" class="btn-default action-btn">Unmark</button>
+                </div>
+
+                <div class="quote">
+                    <button ng-click="quote(comment)" ng-if="userStatus.authenticated && !userStatus.isBanned" class="action-btn">Reply with quote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<hr class="line">
+
+
+<!--Modal Window for editing question by user-->
+<div class="modal fade bs-example-modal-lg edit-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group input-group-md edit">
+
+                        <form name="editQuestionForm">
+                            <h3>Edit Your Question</h3>
+
+                            <input ng-model="question.title" type="text" name="title" class="form-control edit-input" placeholder="Title" ng-minlength="3" ng-maxlength="180" required>
+                            <p ng-show="editQuestionForm.title.$error.maxlength" class="help-block">Too long title.</p>
+                            <p ng-show="editQuestionForm.title.$error.minlength" class="help-block">Too short title.</p>
+
+                            <textarea ng-model="question.description" name="description" class="form-control edit-textarea" placeholder="Write description" required></textarea>
+                            <p ng-show="editQuestionForm.description.$pristine">Fill your description</p>
+
+                            <!--Button, that submits editing -->
+                            <button ng-disabled="editQuestionForm.$invalid" ng-if="!error" ng-click="editQuestion()" class="btn btn-default submit-btn">Save Changes</button>
+                        </form>
+                        <span ng-if="error">{{error}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

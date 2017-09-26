@@ -1,0 +1,17 @@
+.count-select {
+  padding: 30px;
+  text-align: center;
+}
+
+.question {
+  @extend .topic;
+  margin-bottom: 0;
+  .question-inner {
+    @extend .topic-inner;
+  }
+}
+
+
+.even-question {
+  background: rgba(126,146,82,.05);
+}

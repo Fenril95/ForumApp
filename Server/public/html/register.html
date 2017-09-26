@@ -1,0 +1,53 @@
+<div class="second-nav">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button class="btn btn-default button" ui-sref="home"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Back to topics</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="line-small">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+
+            <div class="input-group input-group-md auth">
+
+                <form name="registerForm" ng-submit="register()" novalidate>
+                    <h3>Register</h3>
+
+                    <input ng-model="user.username" name="username" type="text" class="form-control user" placeholder="Username" ng-minlength="3" ng-maxlength="15" required>
+                    <p ng-show="registerForm.username.$error.minlength" class="help-block">Username is too short.</p>
+                    <p ng-show="registerForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+
+                    <input ng-model="user.password" name="password" type="password" class="form-control password" placeholder="Password" ng-minlength="6" ng-maxlength="20" required>
+                    <p ng-show="registerForm.password.$error.minlength" class="help-block">Password is too short.</p>
+                    <p ng-show="registerForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+
+                    <input ng-model="user.email" name="email" type="email" class="form-control email" placeholder="Email" required>
+                    <p ng-show="registerForm.email.$invalid && !registerForm.email.$pristine" class="help-block">Enter a valid email.</p>
+
+                    <input class="file-loader" type="file" name="file" ng-model="user.imgFile" accept="image/*" maxsize="500000"  base-sixty-four-input>
+                    <span>Image must be in jpeg format</span>
+                    <span ng-show="registerForm.file.$error.maxsize">File must not exceed 5 MB</span>
+                    <span ng-show="registerForm.file.$dirty">File has been chosen</span>
+
+                    <button ng-disabled="registerForm.$invalid" type="submit" class="btn btn-default submit-btn">Signup</button>
+                    <span ng-show="registerForm.username.$invalid && registerForm.username.$dirty">Username is required</span>
+                    <span ng-show="registerForm.password.$invalid && registerForm.password.$dirty">Password is required</span>
+
+                </form>
+
+                {{error}}
+                <span ng-if="message">{{message}}</span>
+            </div>
+        </div>
+    </div>
+</div>

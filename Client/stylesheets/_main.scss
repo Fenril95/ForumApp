@@ -1,0 +1,102 @@
+.second-nav {
+  background-color: $second-nav-color;
+  height: 134px;
+  z-index: 1;
+  padding-top: 89px;
+  text-align: center;
+
+
+  .topic-filter {
+    display: inline-block;
+
+    input {
+      font-size: 16px;
+      height: 32px;
+      outline: none;
+    }
+  }
+
+  .forum-search {
+    position: relative;
+    display: inline-block;
+
+    input {
+      font-size: 16px;
+      height: 32px;
+      outline: none;
+    }
+
+    .fa.fa-search {
+      cursor: pointer;
+      position: absolute;
+      font-size: 20px;
+      right: 8px;
+      top: 6px;
+      &:hover {
+        color: $second-nav-color;
+      }
+    }
+  }
+}
+
+.topic-title {
+  @extend .title;
+}
+
+.topic {
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  border: 2px solid #7fa9b2;
+  margin-bottom: 1px;
+
+  .topic-inner {
+    display: flex;
+    flex-direction: row;
+    .left-section {
+      width: 60%;
+      h3 {
+        cursor: pointer;
+        color: $dark-text-color;
+      }
+      p {
+        color: $general-text-color;
+        line-height: 24px;
+        word-wrap: break-word;
+      }
+    }
+
+    .right-section {
+      width: 40%;
+      span {
+        margin-top: 8px;
+        display: block;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .admin-buttons {
+    width: 100%;
+    //text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-top: 1px solid $second-nav-color;
+    button {
+      width: 40%;
+      border-radius: 0;
+      background-color: $second-nav-color;
+      color: $main-text-color;
+      margin-top: 9px;
+      &:hover {
+        background-color: $main-text-color;
+        color: $second-nav-color;
+      }
+    }
+  }
+}
